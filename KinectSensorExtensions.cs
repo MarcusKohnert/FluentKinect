@@ -41,14 +41,16 @@
 			return CheckAndReturn(kinect, _ =>
 			{
 				_ = _.EnableColorStream()
-							   .EnableDepthStream()
-							   .EnableSkeletonStream(new TransformSmoothParameters
-							   {
-								   Correction = 0.8f,
-								   Smoothing = 0.8f
-							   });
+					 .EnableDepthStream()
+					 .EnableSkeletonStream(new TransformSmoothParameters
+					 {
+						 Correction = 0.8f,
+						 Smoothing = 0.8f
+					 });
 
-				if (seated) _.Seated().Start();
+				if (seated) _.Seated();
+
+				_.Start();
 			});
 		}
 
