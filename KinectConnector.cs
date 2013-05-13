@@ -6,8 +6,8 @@
 
 	public sealed class KinectConnector
 	{
-		private IDisposable subscription;
 		private static KinectSensor kinectSensor;
+		private static CoordinateMapper coordinateMapper;
 
 		static KinectConnector()
 		{
@@ -15,16 +15,17 @@
 			if (kinect == null) throw new InvalidOperationException("No Kinect connected..."); // TODO: Hook to StatusChanged event
 			
 			kinectSensor = kinect;
-		}
-
-		protected KinectConnector()
-		{
- 
+			coordinateMapper = new CoordinateMapper(kinectSensor);
 		}
 
 		public static KinectSensor GetKinect()
 		{
 			return kinectSensor;
+		}
+
+		public static CoordinateMapper GetCoordinateMapper()
+		{
+			return coordinateMapper;
 		}
 	}
 }

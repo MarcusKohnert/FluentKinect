@@ -2,6 +2,7 @@
 {
 	using System;
 	using Microsoft.Kinect;
+	using Microsoft.Kinect.Toolkit.Interaction;
 
 	public static class KinectSensorExtensions
 	{
@@ -24,6 +25,14 @@
 				else
 					_.SkeletonStream.Enable();
 			});
+		}
+
+		public static InteractionStream EnableInteractionStream(this KinectSensor kinect, IInteractionClient interactionClient)
+		{
+			if(kinect == null) throw new ArgumentNullException("kinect");
+			if(interactionClient == null) throw new ArgumentNullException("interactionClient");
+
+			return new InteractionStream(kinect, interactionClient);
 		}
 
 		public static KinectSensor Seated(this KinectSensor kinect)
