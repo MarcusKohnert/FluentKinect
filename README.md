@@ -3,13 +3,12 @@ FluentKinect
 
 Set up a Kinect Sensor in a fluent style.
 
-var sensor = KinectSensor.KinectSensors
-                         .FirstOrDefault(_ => _.Status == KinectStatus.Connected);
-if (sensor == null) throw new InvalidOperationException("No kinect connected");
+var sensor = KinectSensor.KinectSensors.FirstOrDefault(_ => _.Status == KinectStatus.Connected); <br />
+if (sensor == null) throw new InvalidOperationException("No kinect connected"); <br />
 
-sensor.EnableColorStream()
-      .EnableSkeletonStream()
-      .EnableDepthStream()
-      .Seated()
-      .NearMode()
-      .Start();
+sensor.EnableColorStream() <br />
+      .EnableSkeletonStream()<br />
+      .EnableDepthStream()<br />
+      .Seated()<br />
+      .NearMode() <br />
+      .Start();<br />
