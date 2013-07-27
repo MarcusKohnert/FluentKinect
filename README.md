@@ -3,8 +3,7 @@ FluentKinect
 
 Set up a Kinect Sensor in a fluent style.
 
-var sensor = KinectSensor.KinectSensors.FirstOrDefault(_ => _.Status == KinectStatus.Connected); <br />
-if (sensor == null) throw new InvalidOperationException("No kinect connected"); <br />
+var sensor = await KinectConnector.GetKinect();<br />
 
 sensor.EnableColorStream() <br />
       .EnableSkeletonStream()<br />
