@@ -24,6 +24,15 @@
 				return task;
 			}
 
+			var kinect = KinectSensor.KinectSensors.FirstOrDefault(_ => _.Status == KinectStatus.Connected);
+			if (kinect != null)
+			{
+				kinectSensor = kinect;
+				var task = new Task<KinectSensor>(() => { return kinectSensor; });
+				task.Start();
+				return task;
+			}
+
 			var t = new Task<KinectSensor>(() =>
 			{
 				KinectSensor sensor = null;

@@ -100,7 +100,7 @@
 		/// <param name="kinect">The kinect sensor.</param>
 		/// <param name="seated">Specifies whether the TrackingMode shall be seated.</param>
 		/// <returns>The configured kinect sensor.</returns>
-		public static KinectSensor KickStart(this KinectSensor kinect, Boolean seated = false)
+		public static KinectSensor KickStart(this KinectSensor kinect, Boolean seated = false, Boolean near = false)
 		{
 			return CheckAndReturn(kinect, _ =>
 			{
@@ -113,6 +113,7 @@
 					 });
 
 				if (seated) _.Seated();
+				if (near) _.NearMode();
 
 				_.Start();
 			});
