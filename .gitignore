@@ -1,35 +1,4 @@
 #################
-## Eclipse
-#################
-
-*.pydevproject
-.project
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.classpath
-.settings/
-.loadpath
-
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# CDT-specific
-.cproject
-
-# PDT-specific
-.buildpath
-
-
-#################
 ## Visual Studio
 #################
 
@@ -40,6 +9,8 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+*.nupkg
+*.nuspec
 
 # Build results
 [Dd]ebug/
@@ -66,22 +37,12 @@ local.properties
 ## TODO: If you have NuGet Package Restore enabled, uncomment this
 #packages/
 
-# Visual C++ cache files
-ipch/
-*.aps
-*.ncb
-*.opensdf
-*.sdf
-
 # Visual Studio profiler
 *.psess
 *.vsp
 
 # ReSharper is a .NET coding add-in
 _ReSharper*
-
-# Installshield output folder
-[Ee]xpress
 
 # DocProject is a documentation generator add-in
 DocProject/buildhelp/
@@ -92,9 +53,6 @@ DocProject/Help/*.hhk
 DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
-
-# Click-Once directory
-publish
 
 # Others
 [Bb]in
@@ -125,39 +83,3 @@ Thumbs.db
 
 # Folder config file
 Desktop.ini
-
-
-#############
-## Python
-#############
-
-*.py[co]
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-
-# Installer logs
-pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-
-#Translations
-*.mo
-
-#Mr Developer
-.mr.developer.cfg
-
-# Mac crap
-.DS_Store

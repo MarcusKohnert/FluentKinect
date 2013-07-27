@@ -2,25 +2,50 @@
 {
 	using System;
 	using System.Linq;
+	using System.Threading;
+	using System.Threading.Tasks;
 	using Microsoft.Kinect;
 
 	public sealed class KinectConnector
 	{
 		private static KinectSensor kinectSensor;
 		private static CoordinateMapper coordinateMapper;
-
-		static KinectConnector()
+		
+		/// <summary>
+		/// Starts a new Task and listens to KinectSensors StatusChanged event.
+		/// </summary>
+		/// <returns>Eventually returns a kinect sensor when one is connected.</returns>
+		public static Task<KinectSensor> GetKinect()
 		{
-			var kinect = KinectSensor.KinectSensors.FirstOrDefault(s => s.Status == KinectStatus.Connected);
-			if (kinect == null) throw new InvalidOperationException("No Kinect connected..."); // TODO: Hook to StatusChanged event
-			
-			kinectSensor = kinect;
-			coordinateMapper = new CoordinateMapper(kinectSensor);
-		}
+			if (kinectSensor != null)
+			{
+				var task = new Task<KinectSensor>(() => { return kinectSensor; });
+				task.Start();
+				return task;
+			}
 
-		public static KinectSensor GetKinect()
-		{
-			return kinectSensor;
+			var t = new Task<KinectSensor>(() =>
+			{
+				KinectSensor sensor = null;
+				using (var signal = new ManualResetEventSlim())
+				{
+					KinectSensor.KinectSensors.StatusChanged += (s, e) =>
+					{
+						if (e.Status == KinectStatus.Connected)
+						{
+							kinectSensor = e.Sensor;
+							coordinateMapper = new CoordinateMapper(kinectSensor);
+							signal.Set();
+						}
+					};
+
+					signal.Wait();
+				}
+
+				return kinectSensor;
+			});
+			t.Start();
+			return t;
 		}
 
 		public static CoordinateMapper GetCoordinateMapper()
