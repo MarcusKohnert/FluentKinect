@@ -10,32 +10,24 @@
 	{
 		private static KinectSensor kinectSensor;
 		private static CoordinateMapper coordinateMapper;
-		
+
 		/// <summary>
 		/// Starts a new Task and listens to KinectSensors StatusChanged event.
 		/// </summary>
 		/// <returns>Eventually returns a kinect sensor when one is connected.</returns>
 		public static Task<KinectSensor> GetKinect()
 		{
-			if (kinectSensor != null)
+			return Task.Factory.StartNew<KinectSensor>(() =>
 			{
-				var task = new Task<KinectSensor>(() => { return kinectSensor; });
-				task.Start();
-				return task;
-			}
+				if (kinectSensor != null) return kinectSensor;
 
-			var kinect = KinectSensor.KinectSensors.FirstOrDefault(_ => _.Status == KinectStatus.Connected);
-			if (kinect != null)
-			{
-				kinectSensor = kinect;
-				var task = new Task<KinectSensor>(() => { return kinectSensor; });
-				task.Start();
-				return task;
-			}
+				var kinect = KinectSensor.KinectSensors.FirstOrDefault(_ => _.Status == KinectStatus.Connected);
+				if (kinect != null)
+				{
+					kinectSensor = kinect;
+					return kinectSensor;
+				}
 
-			var t = new Task<KinectSensor>(() =>
-			{
-				KinectSensor sensor = null;
 				using (var signal = new ManualResetEventSlim())
 				{
 					KinectSensor.KinectSensors.StatusChanged += (s, e) =>
@@ -53,8 +45,6 @@
 
 				return kinectSensor;
 			});
-			t.Start();
-			return t;
 		}
 
 		public static CoordinateMapper GetCoordinateMapper()
